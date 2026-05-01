@@ -25,8 +25,11 @@ export default function LanguageSwitcher({ currentLang, userId }: LanguageSwitch
         // Save to local storage for guest use
         localStorage.setItem('bloomguard_lang', lang);
 
-        // Refresh to apply changes
-        router.refresh();
+        // Save to cookie for server-side access
+        document.cookie = `bloomguard_lang=${lang}; path=/; max-age=31536000`;
+
+        // Reload to apply changes immediately across all components
+        window.location.reload();
     };
 
     return (

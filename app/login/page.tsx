@@ -11,7 +11,7 @@ import '../landing.css'
 function AuthContent() {
     const [mode, setMode] = useState<'login' | 'signup'>('login')
     const [loading, setLoading] = useState(false)
-    const [lang, setLang] = useState<Language>('en')
+    const [lang, setLang] = useState<Language>('uz')
     const searchParams = useSearchParams()
     const [message, setMessage] = useState<string | null>(searchParams.get('message'))
 

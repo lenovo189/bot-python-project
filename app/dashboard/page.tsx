@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import { translations, Language } from "@/utils/translations";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+import { cookies } from "next/headers";
 import "../landing.css";
 
 export default async function DashboardPage() {
@@ -19,7 +20,9 @@ export default async function DashboardPage() {
         .eq('id', user.id)
         .single();
 
-    const lang: Language = profile?.language || 'en';
+    const cookieStore = await cookies();
+    const cookieLang = cookieStore.get('bloomguard_lang')?.value as Language;
+    const lang: Language = profile?.language || cookieLang || 'uz';
     const t = translations[lang];
 
     const { data: projects } = await supabase

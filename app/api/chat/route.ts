@@ -15,7 +15,7 @@ export async function POST(req: Request) {
 
         // 1. Fetch project context and user language
         const { data: profile } = await supabase.from('profiles').select('language').eq('id', user.id).single();
-        const lang = profile?.language || 'en';
+        const lang = profile?.language || 'uz';
 
         const { data: project } = await supabase
             .from('projects')

@@ -3,6 +3,7 @@ import { redirect, notFound } from "next/navigation";
 import Link from "next/link";
 import ChatWindow from "@/components/ChatWindow";
 import { translations, Language } from "@/utils/translations";
+import { cookies } from "next/headers";
 import "@/app/landing.css";
 
 export default async function ProjectPage({ params }: { params: Promise<{ id: string }> }) {
@@ -26,7 +27,9 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
         .eq('id', user.id)
         .single();
 
-    const lang: Language = profile?.language || 'en';
+    const cookieStore = await cookies();
+    const cookieLang = cookieStore.get('bloomguard_lang')?.value as Language;
+    const lang: Language = profile?.language || cookieLang || 'uz';
     const t = translations[lang];
 
     if (project.owner_id !== user.id && profile?.role !== 'admin') {

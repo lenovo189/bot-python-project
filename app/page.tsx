@@ -4,6 +4,7 @@ import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import { translations, Language } from "@/utils/translations";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+import { cookies } from "next/headers";
 import "./landing.css";
 
 export default async function Home() {
@@ -20,7 +21,9 @@ export default async function Home() {
     profile = data;
   }
 
-  const lang: Language = profile?.language || 'en';
+  const cookieStore = await cookies();
+  const cookieLang = cookieStore.get('bloomguard_lang')?.value as Language;
+  const lang: Language = profile?.language || cookieLang || 'uz';
   const t = translations[lang];
 
   const signOut = async () => {
